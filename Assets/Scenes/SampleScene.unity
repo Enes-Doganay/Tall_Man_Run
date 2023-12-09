@@ -351,12 +351,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 963194225}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39580d4472716324496d944bbcf379e4, type: 3}
+  m_Script: {fileID: 11500000, guid: e994bb9651068a9478c6867543d6bb03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  offset: {x: 0, y: 0, z: 0}
-  lookAtOffset: {x: 0, y: 0, z: 0}
-  SmoothCameraFollowStrength: 0
+  offset: {x: 0, y: 0.5, z: -5}
+  lookAtOffset: {x: 0, y: 0, z: -2}
+  SmoothCameraFollowStrength: 8
 --- !u!1 &1614497043
 GameObject:
   m_ObjectHideFlags: 0
@@ -389,8 +389,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8824c2b5b5616a042a5e5e9caacbb143, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  value: 125
-  gateType: 0
 --- !u!65 &1614497045
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -664,19 +662,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 683af9cd18215474aae1fbfbf5fd2b32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  thicknessPieces:
-  - {fileID: 4291762818871369825}
-  - {fileID: 4291762819404608323}
-  - {fileID: 4291762820524583963}
-  - {fileID: 4291762819853265646}
-  - {fileID: 4291762818850581881}
-  - {fileID: 4291762820316587432}
-  - {fileID: 4291762820601205968}
-  - {fileID: 4291762819097969023}
-  - {fileID: 4291762818856100376}
-  upperBody: {fileID: 4291762820030369163}
-  torso: {fileID: 4291762818850581881}
-  root: {fileID: 4291762819510509945}
 --- !u!114 &1892678168
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -690,6 +675,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 4291762818858644259}
+  playerHead: {fileID: 0}
   customPlayerSpeed: 10
   accelerationSpeed: 10
   decelerationSpeed: 20
