@@ -61,10 +61,10 @@ public class RewardedAdsButton : MonoBehaviour, IUnityAdsLoadListener, IUnityAds
         {
             Debug.Log("Unity Ads Rewarded Ad Completed");
             // Grant a reward.
-            CurrencyManager.Instance.MultiplyLevelCurrency(2); //Oyuncunun parasýný ikiye katla
-            CurrencyManager.Instance.TransferToMainCurrency(); //Oyuncunun parasýný ana paraya ekleyip kaydet
-            //GameManager.Instance.NextGameLevel(); //Sonraki levele geç
-            LevelManager.Instance.NextLevel();
+            CurrencyManager.Instance.MultiplyLevelCurrency(2); //Double the player's money.
+            CurrencyManager.Instance.TransferToMainCurrency(); //Add the player's money to the main money and save.
+
+            LevelManager.Instance.NextLevel();             //Move to the next level.
         }
     }
 

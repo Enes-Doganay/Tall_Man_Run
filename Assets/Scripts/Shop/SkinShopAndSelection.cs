@@ -13,20 +13,20 @@ public class SkinShopAndSelection : MonoBehaviour
 
     private void Awake()
     {
-        // Kostüm veritabanýndaki her oyuncu kostümü için döngü baþlat
-        for (int i = 0; i< skinDB.PlayerSkins.Count; i++)
+        // Loop through each player skin in the skin database
+        for (int i = 0; i < skinDB.PlayerSkins.Count; i++)
         {
-            // Satýn alma öðesini klonla ve baðlamý ayarla
+            // Clone the purchase item and set its binding
             SkinContainer shopItem = Instantiate(skinContainer, skinContentTransform);
             shopItem.SetShopItem(skinDB.PlayerSkins[i], this);
         }
-        // Seçilen kostümün ID'sini al
+        // Get the ID of the selected skin
         selectedSkinID = DataController.Instance.GameData.selectedSkinID;
 
-        // Seçilen kostümün rengini belirle
+        // Determine the color of the selected skin
         Color selectedSkinColor = skinDB.PlayerSkins.Find(skin => skin.SkinID == selectedSkinID).SkinColor;
-        
-        // Oyuncu kostümünün rengini güncelle
+
+        // Update the color of the player skin
         playerSkinMat.color = selectedSkinColor;
 
         UpdateSkinSelectionVisual();
@@ -34,7 +34,7 @@ public class SkinShopAndSelection : MonoBehaviour
 
     private void UpdateSkinSelectionVisual()
     {
-        // Tüm kostüm öðelerini kontrol et ve seçilip seçilmediðine göre görselini güncelle
+        // Check all skin items and update their visuals based on whether they are selected or not
         foreach (Transform child in skinContentTransform)
         {
             SkinContainer skinContainer = child.GetComponent<SkinContainer>();
@@ -48,41 +48,41 @@ public class SkinShopAndSelection : MonoBehaviour
 
     public void PurchasePlayerSkin(PlayerSkinData skin)
     {
-        // Eðer kostüme sahip deðilse ve satýn alýnabilirse
+        // If the skin is not owned and is purchasable
         if (!IsSkinOwned(skin) && IsPurchasable(skin.Cost))
         {
-            // Ana para birimini azalt
+            // Decrease the main currency
             CurrencyManager.Instance.DecreaseMainCurrency(skin.Cost);
 
-            // UI üzerinde ana para birimini güncelle
+            // Update the main currency on the UI
             UIManager.Instance.SetMainCurrencyText();
-            
-            // Satýn alýnan deriyi ekle ve kaydet
+
+            // Add the purchased skin and save
             DataController.Instance.GameData.ownedSkins.Add(skin);
             DataController.Instance.Save();
         }
     }
     public void SelectPlayerSkin(PlayerSkinData skin)
     {
-        // Seçilen kostümün ID'sini güncelle
+        // Update the ID of the selected skin
         selectedSkinID = skin.SkinID;
 
-        // Oyuncu kostumünün rengini güncelle
+        // Update the color of the player skin
         playerSkinMat.color = skin.SkinColor;
         UpdateSkinSelectionVisual();
 
-        // Oyun verilerine seçilen kostümü ata ve kaydet
+        // Assign the selected skin to the game data and save
         DataController.Instance.GameData.selectedSkinID = skin.SkinID;
         DataController.Instance.Save();
     }
     public bool IsSkinOwned(PlayerSkinData skin)
     {
-        // Kostüm, sahip olunan kostümler listesinde bulunuyorsa true döndür
+        // Return true if the skin is found in the owned skins list
         return DataController.Instance.GameData.ownedSkins.Contains(skin);
     }
     public bool IsPurchasable(int cost)
     {
-        // Ana para biriminin, maliyetten büyük veya eþit olup olmadýðýný kontrol et
+        // Check if the main currency is greater than or equal to the cost
         return CurrencyManager.Instance.MainCurrency >= cost;
     }
 }

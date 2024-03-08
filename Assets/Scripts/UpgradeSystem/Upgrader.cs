@@ -29,11 +29,11 @@ public class Upgrader : MonoBehaviour
     }
     public void ThicknessUpgrade()
     {
-        bool isUpgradeSuccessful = thicknessUpgrader.Upgrade(); //Upgraderýn UpgradeMetodundan dönen bool deðerini tut
+        bool isUpgradeSuccessful = thicknessUpgrader.Upgrade();
 
-        if (isUpgradeSuccessful) //geliþtirme yapýlabilirse
+        if (isUpgradeSuccessful)
         {
-            UpdateThicknessUI(); //UI'ý güncelle
+            UpdateThicknessUI();
         }
     }
     public void HeightUpgrade()
@@ -48,13 +48,13 @@ public class Upgrader : MonoBehaviour
 
     private void UpdateThicknessUI()
     {
-        //Upgrade level ve upgrade ücreti için textleri güncelle
+        // Update text for upgrade level and upgrade cost
         thicknessLevelText.text = "Level " + thicknessUpgrader.UpgradeLevel;
         thicknessCostText.text = thicknessUpgrader.CalculateUpgradeCost().ToString();
     }
     private void UpdateHeightUI()
     {
-        //Upgrade level ve upgrade ücreti için textleri güncelle
+        // Update text for upgrade level and upgrade cost
         heightLevelText.text = "Level " + heightUpgrader.UpgradeLevel;
         heightCostText.text = heightUpgrader.CalculateUpgradeCost().ToString();
     }

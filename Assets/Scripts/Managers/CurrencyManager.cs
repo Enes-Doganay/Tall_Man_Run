@@ -9,32 +9,32 @@ public class CurrencyManager : Singleton<CurrencyManager>
     protected override void Awake()
     {
         base.Awake();
-        mainCurrency = DataController.Instance.GameData.currency;   //Baþlangýçda mainCurrency deðiþkenine kaydedilen veriyi ata
+        mainCurrency = DataController.Instance.GameData.currency;   // Assign the data saved to the mainCurrency variable at the beginning
     }
     public void AddLevelCurrency(int amount)
     {
-        levelCurrency += amount;    //levelCurrenyi amount kadar arttýr
-        UIManager.Instance.UpdateCurrencyText(levelCurrency); //ve textini güncelle
+        levelCurrency += amount;    // Increase levelCurrency by the amount
+        UIManager.Instance.UpdateCurrencyText(levelCurrency); // and update its text
     }
-    public void AddMainCurrency(int amount) 
+    public void AddMainCurrency(int amount)
     {
-        DataController.Instance.GameData.currency += amount;    //GameData'daki currencyi amount kadar arttýr
-        DataController.Instance.Save(); //ve kaydet
+        DataController.Instance.GameData.currency += amount;    // Increase the currency in GameData by the amount
+        DataController.Instance.Save(); // and save
     }
 
     public void DecreaseMainCurrency(int amount)
     {
-        mainCurrency -= amount;     //anaparayý tutan deðiþkeni miktar kadar azalt
-        DataController.Instance.GameData.currency -= amount; //kaydedilen veridende azalt ve kaydet
+        mainCurrency -= amount;     // Decrease the variable holding the main currency by the amount
+        DataController.Instance.GameData.currency -= amount; // Decrease from the saved data and save
         DataController.Instance.Save();
     }
     public void MultiplyLevelCurrency(float multiplierValue)
     {
-        levelCurrency = Mathf.FloorToInt(levelCurrency * multiplierValue); //levelCurrenyi katla ve düþük integera yuvarla
+        levelCurrency = Mathf.FloorToInt(levelCurrency * multiplierValue); // Multiply levelCurrency and round down to the nearest integer
     }
     public void TransferToMainCurrency()
     {
-        AddMainCurrency(levelCurrency); //levelCurrenyi mainCurrenye ekle ve kaydet
+        AddMainCurrency(levelCurrency); // Add levelCurrency to mainCurrency and save
         levelCurrency = 0;
     }
 }

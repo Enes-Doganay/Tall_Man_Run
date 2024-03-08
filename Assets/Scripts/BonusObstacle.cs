@@ -12,7 +12,7 @@ public class BonusObstacle : Obstacle
     {
         base.OnCollisionEnter(collision);
 
-        //Bonus engeline player çarpýnda kazanýlan bonusu katla
+        // Double the bonus earned when colliding with the bonus obstacle
         if (collision.gameObject.CompareTag("Player"))
         {
             bonusArea.UpdateBonusMultiplier();

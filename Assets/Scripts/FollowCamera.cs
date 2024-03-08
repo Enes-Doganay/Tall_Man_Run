@@ -8,7 +8,7 @@ public class FollowCamera : MonoBehaviour
     [SerializeField] private Vector3 offset;
     [SerializeField] private Vector3 lookAtOffset;
     [SerializeField] private float SmoothCameraFollowStrength;
-    
+
     private Transform cameraTransform;
     private void Awake()
     {
@@ -17,45 +17,45 @@ public class FollowCamera : MonoBehaviour
 
     private Vector3 GetPlayerPosition()
     {
-        // Oyuncu pozisyonunu varsayýlan olarak yukarý vektörüne ayarla
+        // Set the player position defaulting to the up vector
         Vector3 playerPosition = Vector3.up;
-        if(PlayerController.Instance != null)
+        if (PlayerController.Instance != null)
         {
-            // Oyuncunun üst pozisyonunu al
+            // Get the player's top position
             playerPosition = PlayerController.Instance.GetPlayerTop();
         }
-        return playerPosition; // Oyuncu pozisyonunu döndür
+        return playerPosition; // Return the player position
     }
     private void LateUpdate()
     {
-        if(cameraTransform == null)
+        if (cameraTransform == null)
         {
             return;
         }
 
-        // Kamera pozisyonunu ve yönelimini ayarla
+        // Set the camera position and orientation
         SetCameraPositionAndOrientation();
     }
 
     private void SetCameraPositionAndOrientation()
     {
-        // Oyuncu pozisyonunu al
+        // Get the player position
         Vector3 playerPosition = GetPlayerPosition();
 
-        // Kamera pozisyonunu ve bakýþ açýsýný belirli bir ofset ile ayarla
+        // Set the camera position and look direction with a specific offset
         Vector3 offset = playerPosition + this.offset;
         Vector3 lookAtOffset = playerPosition + this.lookAtOffset;
 
-        // Lerp miktarýný belirle (Time.deltaTime ile çarpýlarak yumuþak bir takip saðlanýr)
+        // Determine the amount of interpolation (multiplied by Time.deltaTime for smooth tracking)
         float lerpAmount = Time.deltaTime * SmoothCameraFollowStrength;
 
-        // Kamera pozisyonunu yumuþak bir geçiþ ile ayarla
+        // Set the camera position with smooth transition
         cameraTransform.position = Vector3.Lerp(cameraTransform.position, offset, lerpAmount);
 
-        // Kamera bakýþ açýsýný, belirli bir ofset ile ayarla (Zaman.deltaSüresi ile çarpýlarak yumuþak bir takip saðlanýr)
-        cameraTransform.LookAt(Vector3.Lerp(cameraTransform.position + cameraTransform.forward,lookAtOffset,lerpAmount));
+        // Set the camera look direction with a specific offset (multiplied by Time.deltaTime for smooth tracking)
+        cameraTransform.LookAt(Vector3.Lerp(cameraTransform.position + cameraTransform.forward, lookAtOffset, lerpAmount));
 
-        // Kameranýn yalnýzca z eksenini sabitle (sadece x ve y eksenlerinde takip yap)
+        // Lock only the z-axis of the camera (only track on x and y axes)
         cameraTransform.position = new Vector3(cameraTransform.position.x, cameraTransform.position.y, offset.z);
     }
 }

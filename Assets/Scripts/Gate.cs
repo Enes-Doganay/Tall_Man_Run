@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -31,32 +29,32 @@ public class Gate : MonoBehaviour
 
     private void Awake()
     {
-        SetGate(); //Baþlangýçda Gate'leri ayarla
+        SetGate(); // Set up the gates at the beginning
     }
 
     private void OnValidate()
     {
-        SetGate(); //Deðerlerde bir deðiþiklik olduðunda Gate'i ayarla
+        SetGate(); // Set up the gates when there is a change in values
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        // Çarpýþan objenin TransformChanger bileþenine sahip olup olmadýðýný kontrol et
+        // Check if the colliding object has a TransformChanger component
         if (other.gameObject.GetComponent<TransformChanger>() != null)
         {
-            // Objeden TransformChanger bileþenini al
+            // Get the TransformChanger component from the object
             TransformChanger transformChanger = other.gameObject.GetComponent<TransformChanger>();
-            if (gateType == GateType.Height)  // Kapý türü "Height" ise
+            if (gateType == GateType.Height)  // If the gate type is "Height"
             {
-                // TransformChanger ile playerin yüksekliðini deðer ve çarpan ile deðiþtir
+                // Change the player's height using TransformChanger and the value and multiplier
                 transformChanger.ChangeHeight(value * heightMultiplier);
             }
             else
             {
-                // TransformChanger ile playerin geniþliðini deðer ve çarpan ile deðiþtir
+                // Change the player's thickness using TransformChanger and the value and multiplier
                 transformChanger.ChangeThickness(value * thicknessMultiplier);
             }
-            // Kapýyý etkisizleþtir
+            // Deactivate the gate
             gameObject.SetActive(false);
         }
     }
@@ -70,7 +68,7 @@ public class Gate : MonoBehaviour
         if (gateMeshRenderer == null)
             return;
 
-        //Bir materyal oluþturup transparent olarak ayarlayýp meshRenderera atama iþlemi
+        // Create a new material, set it to transparent, and assign it to the meshRenderer
         if (gateMeshRenderer.sharedMaterial == null)
         {
             Material material = new Material(Shader.Find("Standard"));
@@ -84,10 +82,10 @@ public class Gate : MonoBehaviour
             gateMeshRenderer.sharedMaterial = material;
         }
 
-        // Her bir kapý için yeni bir malzeme örneði oluþtur
+        // Create a new material instance for each gate
         Material gateMaterialInstance = new Material(gateMeshRenderer.sharedMaterial);
 
-        // Kapý türüne göre malzeme ve görünüm ayarlarýný yap
+        // Set material and appearance settings based on the gate type
         switch (gateType)
         {
             case GateType.Height:
@@ -125,7 +123,7 @@ public class Gate : MonoBehaviour
                 break;
         }
 
-        // Yeni malzeme örneðini kapýya ata
+        // Assign the new material instance to the gate
         gateMeshRenderer.material = gateMaterialInstance;
     }
 }

@@ -19,16 +19,16 @@ public class TransformChanger : MonoBehaviour
     {
         capsuleCollider = GetComponent<CapsuleCollider>();
 
-        //Baþlangýçda kaydedilen kalýnlýk ve yükseklik levelini çek
+        // Get saved thickness and height level at the start
         int thicknessLevel = DataController.Instance.GameData.thicknessLevel;
         int heightLevel = DataController.Instance.GameData.heightLevel;
 
-        //Kaydedilen levele göre boyutlarý ayarla
+        // Adjust sizes according to the saved level
         ChangeThickness(thicknessLevel * defaultThicknessMultiplier);
         ChangeHeight(heightLevel * defaultHeightMultiplier);
     }
 
-    //Yüksekliði deðiþtir
+    // Change the height
     public void ChangeHeight(float value)
     {
         torso.localScale += new Vector3(0, value, 0);
@@ -37,27 +37,26 @@ public class TransformChanger : MonoBehaviour
         capsuleCollider.height += value * 2;
         capsuleCollider.center += new Vector3(0, value, 0);
 
-        //Gövdenin boyutu 0.05den küçükse karakteri öldür
+        // If the torso's size is less than 0.1, kill the character
         if (torso.localScale.y < 0.1f)
         {
             GetComponent<PlayerDead>().Death();
         }
     }
 
-    //Kalýnlýk parçalarýný ayarla
+    // Adjust thickness pieces
     public void ChangeThickness(float value)
     {
-        foreach(Transform item in thicknessPieces)
+        foreach (Transform item in thicknessPieces)
         {
             item.localScale += new Vector3(value, 0, value);
         }
         root.localScale += new Vector3(value, value * 0.5f, value);
 
-        //Gövdenin boyutu 0.05den küçükse karakteri öldür
-        if(root.localScale.x < 0.1f)
+        // If the root's size is less than 0.1, kill the character
+        if (root.localScale.x < 0.1f)
         {
             GetComponent<PlayerDead>().Death();
         }
     }
-
 }

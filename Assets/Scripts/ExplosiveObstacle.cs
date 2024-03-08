@@ -15,7 +15,7 @@ public class ExplosiveObstacle : Obstacle
     }
     protected override void HandlePlayerCollision(GameObject player)
     {
-        TransformChanger transformChanger = player.GetComponent<TransformChanger>(); // Oyuncunun TransformChanger bileþenini al
+        TransformChanger transformChanger = player.GetComponent<TransformChanger>(); // Get the TransformChanger component of the player
 
         transformChanger.ChangeHeight(heightChangeAmount);
         transformChanger.ChangeThickness(thicknessChangeAmount);

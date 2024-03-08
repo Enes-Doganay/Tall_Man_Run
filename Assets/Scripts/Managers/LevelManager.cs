@@ -29,18 +29,18 @@ public class LevelManager : Singleton<LevelManager>
             yield return null;
         }
         int level = DataController.Instance.GameData.level;
-        if(levelPrefabs.Count >= level)
+        if (levelPrefabs.Count >= level)
         {
-            Instantiate(levelPrefabs[level - 1]); 
+            Instantiate(levelPrefabs[level - 1]);
         }
         else
         {
-            Instantiate(levelPrefabs[levelPrefabs.Count - 1]); 
+            Instantiate(levelPrefabs[levelPrefabs.Count - 1]);
         }
     }
     public void NextLevel()
     {
-        DataController.Instance.GameData.level++; //Leveli arttýr
+        DataController.Instance.GameData.level++; // Increment the level
         DataController.Instance.Save();
         LoadSceneAsync("LevelScene");
     }

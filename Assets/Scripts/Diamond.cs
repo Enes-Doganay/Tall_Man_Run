@@ -7,20 +7,20 @@ public class Diamond : Collectable
     public override void Collect()
     {
         base.Collect();
-        //LevelCurrenye ekle
+        // Add to LevelCurrency
         CurrencyManager.Instance.AddLevelCurrency(1);
-        
-        //Diamond effecti oluþtur
+
+        // Create Diamond effect
         Instantiate(diamondParticle, transform.position, Quaternion.identity);
-        
-        //Diamondý deaktif yap
+
+        // Deactivate the Diamond
         gameObject.SetActive(false);
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        //Player diamond'a çarptýðýnda topla
-        if(other.gameObject.CompareTag("Player"))
+        // Collect when Player collides with the diamond
+        if (other.gameObject.CompareTag("Player"))
             Collect();
     }
 }

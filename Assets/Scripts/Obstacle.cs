@@ -23,50 +23,50 @@ public class Obstacle : MonoBehaviour
 
     protected virtual void Awake()
     {
-        rb = GetComponent<Rigidbody>(); // Rigidbody bileþenini al
+        rb = GetComponent<Rigidbody>(); // Get the Rigidbody component
     }
 
     protected virtual void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Player")) // Çarpýþan objenin etiketinin "Player" tagýna sahipse
+        if (collision.gameObject.CompareTag("Player")) // If the colliding object has the tag "Player"
         {
-            HandlePlayerCollision(collision.gameObject); // Oyuncu ile çarpýþma iþlemlerini gerçekleþtir
-            SetColliderAsTrigger(); // Collider'ýn isTrigger özelliði true olarak ayarla
-            ApplyRandomForce(); //Rastgele kuvvet uygula
-            AudioManager.Instance.PlayEffect(sound); //Çarpma sesi çal
+            HandlePlayerCollision(collision.gameObject); // Perform collision handling with the player
+            SetColliderAsTrigger(); // Set the collider's isTrigger property to true
+            ApplyRandomForce(); // Apply random force
+            AudioManager.Instance.PlayEffect(sound); // Play collision sound
         }
     }
 
     protected virtual void HandlePlayerCollision(GameObject player)
     {
-        TransformChanger transformChanger = player.GetComponent<TransformChanger>(); // Oyuncunun TransformChanger bileþenini al
-        Transform playerTorso = player.transform.GetChild(0).GetChild(1).transform; // Oyuncunun torsosunu al
+        TransformChanger transformChanger = player.GetComponent<TransformChanger>(); // Get the TransformChanger component of the player
+        Transform playerTorso = player.transform.GetChild(0).GetChild(1).transform; // Get the player's torso
 
-        float torsoHeight = playerTorso.localScale.y;  // Torsu yüksekliðini al
+        float torsoHeight = playerTorso.localScale.y;  // Get the torso height
 
-        if (torsoHeight > heightChangeThreshold)  // Torsunun yüksekliði belirli bir eþik deðerinden büyükse
+        if (torsoHeight > heightChangeThreshold)  // If the torso height is greater than a certain threshold
         {
-            transformChanger.ChangeHeight(heightChangeAmount); // TransformChanger ile oyuncunun yüksekliðini deðiþtir
+            transformChanger.ChangeHeight(heightChangeAmount); // Change the player's height using TransformChanger
         }
         else
         {
-            transformChanger.ChangeThickness(thicknessChangeAmount); // TransformChanger ile oyuncunun kalýnlýðýný deðiþtir
+            transformChanger.ChangeThickness(thicknessChangeAmount); // Change the player's thickness using TransformChanger
         }
     }
 
     protected void SetColliderAsTrigger()
     {
-        GetComponent<Collider>().isTrigger = true; // Collider'ýn isTrigger özelliði true olarak ayarla
+        GetComponent<Collider>().isTrigger = true; // Set the collider's isTrigger property to true
     }
 
     protected void ApplyRandomForce()
     {
-        // Rastgele kuvvet deðerleri oluþtur
+        // Generate random force values
         float forceX = Random.Range(minForceX, maxForceX);
         float forceY = Random.Range(minForceY, maxForceY);
         float forceZ = Random.Range(minForceZ, maxForceZ);
 
-        // Rigidbodoya rastgele bir darbe uygula (Impulse ile)
+        // Apply a random impulse force to the Rigidbody
         rb.AddForce(forceX, forceY, forceZ, ForceMode.Impulse);
     }
 }

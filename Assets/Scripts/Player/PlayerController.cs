@@ -32,32 +32,32 @@ public class PlayerController : Singleton<PlayerController>
 
     protected override void Awake()
     {
-        canMove = true; // Hareket etme yeteneðini baþlangýçta etkinleþtir
+        canMove = true; // Enable movement ability initially
 
-        // Baþlangýçta x ve z pozisyonlarýný kaydet
+        // Save initial x and z positions
         xPos = transform.position.x;
         zPos = transform.position.z;
 
-        // Hýzý sýfýrla
+        // Reset speed
         ResetSpeed();
     }
 
     private void Update()
     {
-        // Eðer hareket etme yeteneði devre dýþý býrakýlmýþsa, iþlemi sonlandýr
+        // If movement ability is disabled, exit the operation
         if (!canMove)
             return;
 
-        // Eðer oyuncu düþerse, ölüm iþlemini baþlat
+        // Start death process if the player falls
         if (transform.position.y < -2f)
         {
             GetComponent<PlayerDead>().Death();
         }
 
-        // Zamanla ilgili bir deðiþkeni sakla
+        // Store a variable related to time
         float deltaTime = Time.deltaTime;
 
-        //Update Speed
+        // Update Speed
         if (!hasInput)
         {
             Decelerate(deltaTime, 0.0f);
@@ -72,7 +72,7 @@ public class PlayerController : Singleton<PlayerController>
         }
         float speed = moveSpeed * deltaTime;
 
-        //Update Position
+        // Update Position
         zPos += speed;
 
         if (hasInput)
@@ -86,7 +86,7 @@ public class PlayerController : Singleton<PlayerController>
         }
         transform.position = new Vector3(xPos, transform.position.y, zPos);
 
-        // Animator varsa ve deltaTime pozitifse, animasyon hýzýný güncelle
+        // Update Animator's speed if it exists and deltaTime is positive
         if (animator != null && deltaTime > 0.0f)
         {
             float distanceTravelledSinceLastFrame = (transform.position - lastPosition).magnitude;
@@ -95,7 +95,7 @@ public class PlayerController : Singleton<PlayerController>
             animator.SetFloat("Speed", distancePerSecond);
         }
 
-        // Eðer pozisyon deðiþtiyse, karakterin yönünü güncelle
+        // Update character direction if position has changed
         if (transform.position != lastPosition)
         {
             transform.forward = Vector3.Lerp(transform.forward, (transform.position - lastPosition).normalized, speed);
@@ -105,85 +105,85 @@ public class PlayerController : Singleton<PlayerController>
 
     public void AdjustMoveSpeed(float speed)
     {
-        // Hedef hareket hýzýný arttýr veya azalt
+        // Increase or decrease target movement speed
         targetMoveSpeed += speed;
 
-        // Hedef hareket hýzýný en az 0 olarak sýnýrla
+        // Clamp target movement speed to minimum of 0
         targetMoveSpeed = Mathf.Max(0, targetMoveSpeed);
     }
     public void ResetSpeed()
     {
-        // Hedef hareket hýzýný varsayýlan hareket hýzýna sýfýrla
+        // Reset target movement speed to default movement speed
         targetMoveSpeed = defaultMoveSpeed;
     }
     public void SetDeltaPosition(float normalizedDeltaPosition)
     {
-        // X ekseninde tam geniþlik hesapla
+        // Calculate full width on X axis
         float fullWidth = maxXPosition * 2;
 
-        // Hedef pozisyonu, normalleþtirilmiþ delta pozisyonu ile güncelle
+        // Update target position with normalized delta position
         targetPosition = targetPosition + fullWidth * normalizedDeltaPosition;
 
-        // Hedef pozisyonu, belirli sýnýrlar içinde tut
+        // Clamp target position within certain limits
         targetPosition = Mathf.Clamp(targetPosition, -maxXPosition, maxXPosition);
         hasInput = true;
     }
     public void Jump(Vector3 jumpEndPoint, float jumpPower, float duration)
     {
-        // Þu anki yükseklik pozisyonunu sakla
+        // Store current height position
         float currentYPos = transform.position.y;
 
-        // Zýplama hedefinin y eksenini, þu anki yükseklik pozisyonu ile eþitle
+        // Set Y axis of jump target to current height position
         jumpEndPoint.y = currentYPos;
 
-        // Hareketi devre dýþý býrak
+        // Disable movement
         canMove = false;
 
-        // DOTween kütüphanesi ile karakteri zýplatarak, tamamlandýðýnda tekrar hareket etmeyi saðla
+        // Use DOTween library to make the character jump and enable movement again when completed
         transform.DOJump(jumpEndPoint, jumpPower, 1, duration).OnComplete(() =>
         {
             canMove = true;
 
-            // X ve Z pozisyonlarýný zýplama noktasýna güncelle
+            // Update X and Z positions to jump point
             xPos = jumpEndPoint.x;
             zPos = jumpEndPoint.z;
         });
     }
     private void Accelerate(float deltaTime, float targetSpeed)
     {
-        // Hareket hýzýný hýzlandýr
+        // Accelerate movement speed
         moveSpeed += deltaTime * accelerationSpeed;
 
-        // Hareket hýzýný hedef hýz ile sýnýrla
+        // Limit movement speed to target speed
         moveSpeed = Mathf.Min(moveSpeed, targetSpeed);
     }
     private void Decelerate(float deltaTime, float targetSpeed)
     {
-        // Hareket hýzýný yavaþlat
+        // Decelerate movement speed
         moveSpeed -= deltaTime * decelerationSpeed;
 
-        // Hareket hýzýný hedef hýz ile sýnýrla
+        // Limit movement speed to target speed
         moveSpeed = Mathf.Max(moveSpeed, targetSpeed);
     }
     public void CancelMovement()
     {
-        // Hareket giriþini iptal et
+        // Cancel movement input
         hasInput = false;
     }
     public void SetAnimator(bool active)
     {
-        // Animator'ýn etkinliðini belirtilen duruma ayarla
+        // Set animator's activity to specified state
         animator.enabled = false;
     }
     public void SetMaxXPosition(float value)
     {
-        // Maksimum X pozisyonunu belirtilen deðere ayarla
+        // Set maximum X position to specified value
         maxXPosition = value;
     }
     public Vector3 GetPlayerTop()
     {
         CapsuleCollider col = GetComponent<CapsuleCollider>();
-        // Oyuncunun tepesini, kapsül collider'ýn merkezi ve yüksekliðinin yarýsý kadar yukarýdan hesapla
+        // Calculate player's top as capsule collider's center plus half of its height from upward
         return transform.position + col.center + Vector3.up * (col.height * 0.5f);
     }
 }

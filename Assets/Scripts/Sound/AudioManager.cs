@@ -88,10 +88,10 @@ public class AudioManager : Singleton<AudioManager>
 
     void PlayEffect(AudioClip audioClip)
     {
-        if (Time.time - lastSoundPlayTime >= minSoundInterval) //Þuanki zamandan son ses çalma zamanýný çýkarttýðýmýzda minimum ses aralýðýndan büyükse
+        if (Time.time - lastSoundPlayTime >= minSoundInterval)
         {
-            effectSource.PlayOneShot(audioClip); //Effect sesini bir kez çal
-            lastSoundPlayTime = Time.time; //Son ses çalma zamanýna þuanki zamaný ata
+            effectSource.PlayOneShot(audioClip);
+            lastSoundPlayTime = Time.time;
         }
     }
 

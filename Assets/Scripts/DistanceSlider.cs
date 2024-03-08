@@ -10,36 +10,36 @@ public class DistanceSlider : MonoBehaviour
     private Transform finishLine;
     private void Awake()
     {
-        // Slider bileþenini al
+        // Get the Slider component
         distanceSlider = GetComponent<Slider>();
 
-        // FinishLine nesnesini bul ve transformunu al
+        // Find the FinishLine object and get its transform
         finishLine = GameObject.Find("FinishLine").transform;
 
         Initialize();
     }
     private void Initialize()
     {
-        // Oyun verilerinden seviyeyi al ve seviye metnini güncelle
+        // Get the level from game data and update the level text
         int level = DataController.Instance.GameData.level;
         levelText.text = level.ToString();
 
-        // Slider'ýn maksimum ve minimum deðerlerini ayarla
+        // Set the maximum and minimum values of the slider
         distanceSlider.maxValue = finishLine.position.z - PlayerController.Instance.transform.position.z;
         distanceSlider.minValue = 0;
     }
     private void Update()
     {
-        // Eðer slider nesnesi etkinse ve PlayerController nesnesi null deðilse
+        // If the slider object is active and the PlayerController object is not null
         if (distanceSlider.gameObject.activeInHierarchy && PlayerController.Instance != null)
         {
-            // Toplam mesafeyi hesapla
+            // Calculate the total distance
             float totalDistance = finishLine.position.z - PlayerController.Instance.transform.position.z;
 
-            // Kat edilen mesafeyi hesapla
+            // Calculate the travelled distance
             float travelledDistance = distanceSlider.maxValue - totalDistance;
 
-            // Slider'ýn deðerini kat edilen mesafeye göre ayarla
+            // Set the value of the slider based on the travelled distance
             distanceSlider.value = travelledDistance;
         }
     }

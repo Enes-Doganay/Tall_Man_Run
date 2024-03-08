@@ -16,50 +16,50 @@ public class SkinContainer : MonoBehaviour
     public PlayerSkinData PlayerSkinData => playerSkinData;
     public void SetShopItem(PlayerSkinData playerSkinData, SkinShopAndSelection controller)
     {
-        // Oyuncu kostüm verisini ve kontrolcüyü ayarla
+        // Set the player skin data and the controller
         this.playerSkinData = playerSkinData;
         skinController = controller;
 
-        if (skinController.IsSkinOwned(playerSkinData)) //Bu kostüme sahipse seçilebilir yap
+        if (skinController.IsSkinOwned(playerSkinData)) // If the player owns this skin, make it selectable
             selectButton.interactable = true;
 
-        // kostüm renk görselinin rengini oyuncu kostüm rengine ayarla
+        // Set the color of the skin image to the player's skin color
         itemImage.color = playerSkinData.SkinColor;
         costText.text = playerSkinData.Cost.ToString();
 
-        // Satýn alma düðmesinin görünürlüðünü güncelle
+        // Update the visibility of the buy button
         UpdateBuyButtonVisibility();
 
-        // Düðme dinleyicilerini ekle
+        // Add button listeners
         AddButtonListeners();
     }
 
     private void UpdateBuyButtonVisibility()
     {
-        // Satýn alma düðmesinin görünürlüðünü, oyuncunun deriyi sahip olup olmadýðýna göre güncelle
+        // Update the visibility of the buy button based on whether the player owns the skin or not
         buyButton.gameObject.SetActive(!skinController.IsSkinOwned(playerSkinData));
     }
 
     private void AddButtonListeners()
     {
-        // Satýn alma ve seçme düðmelerine týklama dinleyicilerini ekle
+        // Add click listeners to the buy and select buttons
         buyButton.onClick.AddListener(() => OnBuyButtonClicked());
         selectButton.onClick.AddListener(() => OnSelectButtonClicked());
     }
     public void OnBuyButtonClicked()
     {
-        // Oyuncu kostümünü satýn al ve dükkân öðesini güncelle
+        // Purchase the player skin and update the shop item
         skinController.PurchasePlayerSkin(playerSkinData);
         SetShopItem(playerSkinData, skinController);
-    }    
+    }
     public void OnSelectButtonClicked()
     {
-        // Oyuncu kostümünü seç
+        // Select the player skin
         skinController.SelectPlayerSkin(playerSkinData);
     }
     public void SetSelectionVisual(bool isSelected)
     {
-        // Seçim düðmesinin rengini, seçili olup olmadýðýna göre güncelle
+        // Update the color of the selection button based on whether it is selected or not
         selectButton.GetComponent<Image>().color = isSelected ? selectedColor : normalColor;
     }
 }

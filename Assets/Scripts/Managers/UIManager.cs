@@ -12,7 +12,7 @@ public class UIManager : Singleton<UIManager>
     [Header("Starting Panel Elements")]
     [SerializeField] private GameObject startingPanel;
     [SerializeField] private TextMeshProUGUI totalCurrencyText;
-    
+
     [Header("Win Panel Elements")]
     [SerializeField] private GameObject winPanel;
     [SerializeField] private TextMeshProUGUI rewardText;
@@ -22,41 +22,41 @@ public class UIManager : Singleton<UIManager>
     {
         base.Awake();
         SetMainCurrencyText();
-        winPanel.transform.localScale = Vector3.zero; //win paneli baþlangýçda gözükmemesi için boyutunu sýfýrla
-        lostPanel.transform.localScale = Vector3.zero; //lost paneli baþlangýçda gözükmemesi için boyutunu sýfýrla
-        getButton.onClick.AddListener(() => LevelManager.Instance.NextLevel()); //Buttona týklandýðýnda sonraki levele geçmesi için event ekle
-        lostPanel.GetComponent<Button>().onClick.AddListener(() => LevelManager.Instance.RestartLevel()); //Buttona týklandýðýnda leveli yeniden baþlatmasý için event ekle
+        winPanel.transform.localScale = Vector3.zero; // Set the size of the win panel to zero initially
+        lostPanel.transform.localScale = Vector3.zero; // Set the size of the lost panel to zero initially
+        getButton.onClick.AddListener(() => LevelManager.Instance.NextLevel()); // Add event to move to the next level when the button is clicked
+        lostPanel.GetComponent<Button>().onClick.AddListener(() => LevelManager.Instance.RestartLevel()); // Add event to restart the level when the button is clicked
     }
     public void OpenButton(GameObject gameObject)
     {
-        gameObject.SetActive(true); //nesneyi aktifleþtir
+        gameObject.SetActive(true); // Activate the object
     }
     public void CloseButton(GameObject gameObject)
     {
-        gameObject.SetActive(false); //nesneyi deaktif et
+        gameObject.SetActive(false); // Deactivate the object
     }
     public void SetGameStartUI()
     {
-        startingPanel.SetActive(false); //start paneli deaktif edip
-        hudPanel.SetActive(true); // hud paneli aç 
+        startingPanel.SetActive(false); // Deactivate the start panel
+        hudPanel.SetActive(true); // Activate the HUD panel
     }
     public void ShowWinUI()
     {
-        rewardText.text = CurrencyManager.Instance.LevelCurrency.ToString(); //ödül textini güncelle
-        winPanel.SetActive(true); //win paneli aç
-        winPanel.transform.DOScale(1, 1); // do tween paketinin fonksiyonu ile boyutu sýfýrdan 1 e 1 saniye de yükselt
+        rewardText.text = CurrencyManager.Instance.LevelCurrency.ToString(); // Update the reward text
+        winPanel.SetActive(true); // Activate the win panel
+        winPanel.transform.DOScale(1, 1); // Scale the panel from zero to one over one second using the DoTween package function
     }
     public void ShowLostUI()
     {
-        lostPanel.SetActive(true);  //lost paneli kapat
-        lostPanel.transform.DOScale(1, 1); // do tween paketinin fonksiyonu ile boyutu sýfýrdan 1 e 1 saniye de yükselt
+        lostPanel.SetActive(true); // Activate the lost panel
+        lostPanel.transform.DOScale(1, 1); // Scale the panel from zero to one over one second using the DoTween package function
     }
     public void UpdateCurrencyText(int currency)
     {
-        gameCurrencyText.text = currency.ToString();    //oyun içi para kazanýldýkça texti güncellemek için metod
+        gameCurrencyText.text = currency.ToString(); // Method to update the currency text as currency is earned in-game
     }
     public void SetMainCurrencyText()
     {
-        totalCurrencyText.text = CurrencyManager.Instance.MainCurrency.ToString(); //oyun içi toplam parayý gösteren texti ayarla
+        totalCurrencyText.text = CurrencyManager.Instance.MainCurrency.ToString(); // Set the text showing the total in-game currency
     }
 }

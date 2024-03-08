@@ -7,7 +7,7 @@ public class Collectable : MonoBehaviour
     [SerializeField]
     private SoundID sound = SoundID.None;
 
-    public virtual void Collect() //Toplandýðýnda effect sesi çal
+    public virtual void Collect() // Play an effect sound when collected
     {
         AudioManager.Instance.PlayEffect(sound);
     }

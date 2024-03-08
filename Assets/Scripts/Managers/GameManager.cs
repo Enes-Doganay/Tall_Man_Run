@@ -1,4 +1,4 @@
-public enum GameState //Oyun durumlarýný tutmak için enum
+public enum GameState // Enum to hold game states
 {
     Playing,
     Won,
@@ -11,8 +11,8 @@ public class GameManager : Singleton<GameManager>
     private bool isGameStarted = false;
     private bool gameWon;
     public bool IsGameStarted => isGameStarted;
-    
-    public void SetState(GameState state) //Oyun durumunu ayarla
+
+    public void SetState(GameState state) // Method to set the game state
     {
         CurrentState = state;
 
@@ -21,19 +21,19 @@ public class GameManager : Singleton<GameManager>
             case GameState.Playing:
                 gameWon = false;
                 break;
-            case GameState.Won: 
-                gameWon = true; 
+            case GameState.Won:
+                gameWon = true;
                 break;
-            case GameState.End:                     
-                if(gameWon) //Win durumu
+            case GameState.End:
+                if (gameWon) // If the game is won
                 {
-                    float bonusMultiplier = FindAnyObjectByType<BonusArea>().BonusMultiplier;  //BonusArea 'yý bul ve toplanan Bonuslarýn çarpanýný ata
-                    CurrencyManager.Instance.MultiplyLevelCurrency(bonusMultiplier); //Level parabirimini bonus ile katla
-                    UIManager.Instance.ShowWinUI(); //Kazanma UI'ýný göster
+                    float bonusMultiplier = FindAnyObjectByType<BonusArea>().BonusMultiplier;  // Find the BonusArea and assign the multiplier of collected bonuses
+                    CurrencyManager.Instance.MultiplyLevelCurrency(bonusMultiplier); // Multiply level currency with the bonus
+                    UIManager.Instance.ShowWinUI(); // Show the win UI
                 }
-                else //Lose durumu
+                else // If the game is lost
                 {
-                    UIManager.Instance.ShowLostUI(); //Oyunu kaybetme ui'ýný göster
+                    UIManager.Instance.ShowLostUI(); // Show the lost UI
                 }
                 break;
         }

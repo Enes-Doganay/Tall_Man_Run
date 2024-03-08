@@ -12,11 +12,10 @@ public class EndGameChest : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
             animator.SetTrigger("Open");
-            GameManager.Instance.SetState(GameState.End); //Oyun durumunu bitti olarak ayarla
+            GameManager.Instance.SetState(GameState.End); // Set the game state to end
 
             InputManager.Instance.enabled = false;
             PlayerController.Instance.CancelMovement();
-            //Input manageri kapatmayý ekle
         }
     }
 }

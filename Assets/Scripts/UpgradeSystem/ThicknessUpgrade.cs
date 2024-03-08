@@ -17,37 +17,37 @@ public class ThicknessUpgrade : IUpgrade
 
     public int CalculateUpgradeCost()
     {
-        //Geliþtirme ücretini hesapla
+        // Calculate the upgrade cost
         return defaultUpgradeCost + (upgradeLevel * costMultiplier);
     }
 
     public bool IsUpgradeable(int upgradeCost)
     {
-        // Yükseltme maliyeti, ana para biriminden küçük ve yükseltme seviyesi maksimum yükseltme seviyesinden küçükse true döndür
+        // Return true if the upgrade cost is less than the main currency and the upgrade level is less than the maximum upgrade level
         return upgradeCost < CurrencyManager.Instance.MainCurrency && upgradeLevel < maxUpgradeLevel;
     }
 
     public bool Upgrade()
     {
-        // Yükseltme maliyetini hesapla
+        // Calculate the upgrade cost
         int upgradeCost = CalculateUpgradeCost();
 
-        // Eðer yükseltme mümkünse
+        // If the upgrade is possible
         if (IsUpgradeable(upgradeCost))
         {
-            //Transform deðiþtiricide kalýnlýðý yükselt
+            // Increase the thickness in the transform changer
             transformChanger.ChangeThickness(thicknessValue * transformChanger.DefaultThicknessMultiplier);
 
-            // Yükseltme seviyesini bir arttýr
+            // Increase the upgrade level by one
             upgradeLevel += 1;
 
-            // Ana para birimini azalt
+            // Decrease the main currency
             CurrencyManager.Instance.DecreaseMainCurrency(upgradeCost);
 
-            //Ana para biriminin textini güncelle
+            // Update the main currency text
             UIManager.Instance.SetMainCurrencyText();
 
-            // Oyun verilerinde kalýnlýk seviyesini bir arttýr ve verileri kaydet
+            // Increase the thickness level in the game data and save the data
             DataController.Instance.GameData.thicknessLevel += 1;
             DataController.Instance.Save();
             return true;

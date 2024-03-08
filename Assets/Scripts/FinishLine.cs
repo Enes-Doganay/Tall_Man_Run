@@ -12,9 +12,9 @@ public class FinishLine : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            GameManager.Instance.SetState(GameState.Won); //Oyun durumunu kazandý olarak ayala
+            GameManager.Instance.SetState(GameState.Won); // Set the game state to won
             AudioManager.Instance.PlayEffect(confettiSound);
-            confetti.Play(); //Confetti effectini oynat
+            confetti.Play(); // Play the confetti effect
         }
     }
 }
