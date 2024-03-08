@@ -14,7 +14,7 @@ Intuitive tap controls for easy navigation.
 Collect coins to upgrade the starting size of the character.
 Diverse levels with unique challenges and obstacles.
 
-# How to Play:
+# How to Play
 
 Tap on the screen to move the character.
 Navigate through doors to increase character size.
